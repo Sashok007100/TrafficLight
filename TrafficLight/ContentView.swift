@@ -51,6 +51,30 @@ struct ContentView: View {
         }
         .padding()
     }
+    
+    private func didTapSwitchLight() {
+        
+        if buttonTitle == "START" {
+            buttonTitle = "NEXT"
+        }
+        
+        switch currentLight {
+        case .red:
+            greenOpacity = lightIsOff
+            redOpacity = lightIsOn
+            currentLight = .yellow
+        case .yellow:
+            redOpacity = lightIsOff
+            yellowOpacity = lightIsOn
+            currentLight = .green
+        case .green:
+            yellowOpacity = lightIsOff
+            greenOpacity = lightIsOn
+            currentLight = .red
+        }
+    }
+}
+
 // MARK: - CurrentLight
 extension ContentView {
     enum CurrentLight {
