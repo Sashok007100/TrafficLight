@@ -8,14 +8,77 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var buttonTitle = "START"
+    
+    @State private var currentLight = CurrentLight.red
+    
+    @State private var redOpacity = 0.3
+    @State private var yellowOpacity = 0.3
+    @State private var greenOpacity = 0.3
+    
+    private let lightIsOn = 1.0
+    private let lightIsOff = 0.3
+    
+    private var colorRed = Color.red
+    private var colorYellow = Color.yellow
+    private var colorGreen = Color.green
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            TrafficLightCircleView(color: colorRed.opacity(redOpacity))
+            TrafficLightCircleView(color: colorYellow.opacity(yellowOpacity))
+            TrafficLightCircleView(color: colorGreen.opacity(greenOpacity))
+            
+            Spacer()
+            
+            Button {
+                didTapSwitchLight()
+            } label: {
+                Text("\(buttonTitle)")
+                    .foregroundStyle(.white)
+            }
+            .frame(maxWidth: 200, maxHeight: 55)
+            .background(.tint)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .overlay{
+                RoundedRectangle(cornerRadius: 20).stroke(.white, lineWidth: 4)
+            }
+            .shadow(radius: 20)
+            
+            
+
         }
         .padding()
+    }
+    
+    private func didTapSwitchLight() {
+        
+        if buttonTitle == "START" {
+            buttonTitle = "NEXT"
+        }
+        
+        switch currentLight {
+        case .red:
+            greenOpacity = lightIsOff
+            redOpacity = lightIsOn
+            currentLight = .yellow
+        case .yellow:
+            redOpacity = lightIsOff
+            yellowOpacity = lightIsOn
+            currentLight = .green
+        case .green:
+            yellowOpacity = lightIsOff
+            greenOpacity = lightIsOn
+            currentLight = .red
+        }
+    }
+}
+
+// MARK: - CurrentLight
+extension ContentView {
+    enum CurrentLight {
+        case red, yellow, green
     }
 }
 
