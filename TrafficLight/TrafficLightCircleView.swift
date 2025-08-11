@@ -9,19 +9,20 @@ import SwiftUI
 
 struct TrafficLightCircleView: View {
     let color: Color
+    let opacity: Double
     
     var body: some View {
         Circle()
-            .frame(width: 130, height: 130)
+            .frame(width: 130)
             .foregroundStyle(color)
+            .opacity(opacity)
             .overlay {
                 Circle().stroke(.white, lineWidth: 4)
             }
             .shadow(radius: 10)
-            .padding(8)
     }
 }
 
 #Preview {
-    TrafficLightCircleView(color: .red)
+    TrafficLightCircleView(color: .red, opacity: 1)
 }
